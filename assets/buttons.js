@@ -1,6 +1,12 @@
 require(['gitbook', 'jquery'], function(gitbook, $) {
     var fontState;
 
+    var THEMES = {
+        'white': 0,
+        'sepia': 1,
+        'night': 2
+    };
+
     var FAMILY = {
         'serif': 0,
         'sans': 1
@@ -38,6 +44,22 @@ require(['gitbook', 'jquery'], function(gitbook, $) {
         saveFontSettings();
     }
 
+    // Change type of color
+    function changeColorTheme(index, e) {
+        e.preventDefault();
+
+        var $book = $('.book');
+
+        if (fontState.theme !== 0)
+            $book.removeClass('color-theme-'+fontState.theme);
+
+        fontState.theme = index;
+        if (fontState.theme !== 0)
+            $book.addClass('color-theme-'+fontState.theme);
+
+        saveFontSettings();
+    }
+
     function update() {
         var $book = gitbook.state.$book;
 
@@ -47,6 +69,11 @@ require(['gitbook', 'jquery'], function(gitbook, $) {
         $book[0].className = $book[0].className.replace(/\bfont-\S+/g, '');
         $book.addClass('font-size-'+fontState.size);
         $book.addClass('font-family-'+fontState.family);
+
+        if(fontState.theme !== 0) {
+            $book[0].className = $book[0].className.replace(/\bcolor-theme-\S+/g, '');
+            $book.addClass('color-theme-'+fontState.theme);
+        }
     }
 
     function init(config) {
@@ -54,6 +81,7 @@ require(['gitbook', 'jquery'], function(gitbook, $) {
         fontState = gitbook.storage.get('fontState', {
             size: config.size || 2,
             family: FAMILY[config.family || 'sans'],
+            theme: THEMES[config.theme || 'white']
         });
 
         update();

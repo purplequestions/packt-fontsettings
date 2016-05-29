@@ -2,7 +2,7 @@
   "name": "gitbook-plugin-packt-fontsettings",
   "description": "Font settings for a better reading experience",
   "main": "index.js",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "license": "Apache-2.0",
   "homepage": "https://github.com/microstash/packt-fontsettings",
   "engines": {
